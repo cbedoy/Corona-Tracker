@@ -50,7 +50,5 @@ class CoronaHolder(override val containerView: View) : RecyclerView.ViewHolder(c
         corona_cell_recovered_text.text = "${corona.recovered}"
 
         corona_cell_deaths_text.text = "${corona.deaths}"
-
-        corona_cell_today_cases_text.text = "${corona.totalCases}"
     }
 }

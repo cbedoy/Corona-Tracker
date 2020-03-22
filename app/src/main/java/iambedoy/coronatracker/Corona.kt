@@ -8,7 +8,6 @@ package iambedoy.coronatracker
 data class Corona(
     val country: String,
     val cases: Long = 0,
-    val totalCases: Long = 0,
     val deaths: Long = 0,
     val todayCases: Long = 0,
     val todayDeaths: Long = 0,

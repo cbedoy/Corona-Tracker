@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Corona Tracker</string>
+    <string name="information">Information</string>
 </resources>
