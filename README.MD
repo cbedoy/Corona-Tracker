@@ -4,20 +4,18 @@
 Inspired by: 
 https://github.com/ahmadawais/corona-cli
 
-Android application implements same funcitonalyty of Corona-CLi
+Track Corona Virus COVID19 cases with this Andriod Application.
 
+# How it looks
 
-🦠 Track the Coronavirus disease (COVID-19) or the Novel Coronavirus Strain in the command line. Both worldwide for all countries, for one country, or for the US States. Fast response time (&lt; 100ms).
+<img width="240" alt="" src="https://github.com/cbedoy/Corona-Tracker/blob/master/demo_v2.png?raw=true"><img width="240" alt="" src="https://github.com/cbedoy/Corona-Tracker/blob/master/sort_demo.png?raw=true"><img width="240" alt="" src="https://github.com/cbedoy/Corona-Tracker/blob/master/credit.png?raw=true">
 
 
 # Android App
- - [Carlos Bedoy](https://www.linkedin.com/in/carlos-bedoy-34248187/) | Android Enginner 
-
-## License & Conduct
-
-- MIT © [Ahmad Awais](https://twitter.com/MrAhmadAwais/)
-- [Code of Conduct](code-of-conduct.md)
-- SOURCES: , and all of the following:
+ - [Carlos Bedoy](https://www.linkedin.com/in/carlos-bedoy-34248187/) | Android Engineer
+ 
+ # API
+ - [NovelCOVID](https://github.com/NovelCOVID/API) | API
 
 ### Sources
 
@@ -175,6 +173,10 @@ Android application implements same funcitonalyty of Corona-CLi
     </li>
 	<li id="ref-26">
         NovelCOVID API based on top of <a href="https://www.worldometers.info/coronavirus/">WorldMeter</a>
+    </li>
+    </li>
+	<li id="ref-27">
+        Insipired by <a href="https://github.com/ahmadawais/corona-cli">Corona-cli</a>
     </li>
 </ol>
 

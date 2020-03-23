@@ -1,4 +1,4 @@
-package iambedoy.coronatracker
+package iambedoy.coronatracker.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import iambedoy.coronatracker.R
+import iambedoy.coronatracker.adapter.CoronaAdapter
+import iambedoy.coronatracker.models.SortBy
+import iambedoy.coronatracker.viewmodel.CoronaViewModel
 import kotlinx.android.synthetic.main.fragment_corona.*
 
 /**
@@ -36,7 +40,7 @@ class CoronaListFragment : Fragment(){
 
         fragment_corona_recycler_view.layoutManager = LinearLayoutManager(context)
         fragment_corona_recycler_view.adapter = coronaAdapter
-        fragment_corona_recycler_view.setHasFixedSize(true)
+        fragment_corona_recycler_view.isNestedScrollingEnabled = false
 
         viewModel.coronaList.observe(viewLifecycleOwner, Observer { list ->
             coronaAdapter.dataModel = list
@@ -48,5 +52,9 @@ class CoronaListFragment : Fragment(){
         super.onResume()
 
         viewModel.loadCoronaList()
+    }
+
+    fun sortBy(sort: SortBy) {
+        viewModel.filterBy(sort)
     }
 }

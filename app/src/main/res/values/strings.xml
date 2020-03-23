@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Corona Tracker</string>
     <string name="information">Information</string>
+    <string name="sort">Filter</string>
+    <string name="sort_by_deaths">Sort by deaths</string>
+    <string name="sort_by_cases">Sort by cases</string>
+    <string name="sort_by_today_cases">Sort by today cases</string>
+    <string name="sort_by_today_deaths">Sort by today deaths</string>
+    <string name="sort_by_recovered">Sort by recovered</string>
 </resources>
