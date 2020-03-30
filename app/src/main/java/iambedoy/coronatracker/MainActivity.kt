@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
                     "https://github.com/ahmadawais/corona-cli\n" +
                     "\n" +
                     "\n" +
-                    "\uD83E\uDDA0 Track the Coronavirus disease (COVID-19) or the Novel Coronavirus Strain in the command line. Both worldwide for all countries, for one country, or for the US States. Fast response time (&lt; 100ms).\n" +
+                    "\uD83E\uDDA0 Track Corona Virus COVID19 cases with this Andriod Application.\n" +
                     "\n" +
                     "\n" +
                     "Android App by:\n" +
