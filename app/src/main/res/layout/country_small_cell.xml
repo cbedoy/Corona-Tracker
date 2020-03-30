@@ -22,38 +22,51 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:background="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/corona_cell_country_name"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:padding="8dp"
-                android:layout_height="wrap_content"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:fontFamily="@font/roboto_mono"
-                android:text="@string/app_name"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
 
-            <View
-                android:background="#f0f0f0"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"/>
+                <TextView
+                    android:id="@+id/corona_small_cell_country_name"
+                    android:layout_width="0dp"
+                    android:padding="8dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_mono"
+                    android:text="@string/app_name"
+                    android:textColor="@color/black_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/corona_small_cell_country_flag"
+                    tools:src="@drawable/flag_ex"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    android:layout_width="40dp"
+                    android:layout_margin="8dp"
+                    android:layout_height="24dp"/>
+
+            </LinearLayout>
 
 
             <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/corona_small_cell_info_container"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
+                android:background="#fafafa"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -82,6 +95,8 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -110,6 +125,8 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -138,6 +155,8 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -166,6 +185,8 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -194,6 +215,8 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -222,6 +245,8 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -250,6 +275,8 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -277,6 +304,7 @@
 
                 </LinearLayout>
             </LinearLayout>
+
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

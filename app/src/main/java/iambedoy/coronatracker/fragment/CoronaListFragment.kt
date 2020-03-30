@@ -27,6 +27,8 @@ class CoronaListFragment : Fragment(){
 
     private val viewModel : CoronaViewModel by viewModels()
 
+    private var currentSortBy = SortBy.CASES
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,13 +40,17 @@ class CoronaListFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fragment_corona_recycler_view.layoutManager = LinearLayoutManager(context)
+        val linearLayoutManager = LinearLayoutManager(context)
+
+        fragment_corona_recycler_view.layoutManager = linearLayoutManager
         fragment_corona_recycler_view.adapter = coronaAdapter
         fragment_corona_recycler_view.isNestedScrollingEnabled = false
 
         viewModel.coronaList.observe(viewLifecycleOwner, Observer { list ->
             coronaAdapter.dataModel = list
             coronaAdapter.notifyDataSetChanged()
+
+            coronaAdapter.currentSortBy = currentSortBy
         })
      }
 
@@ -55,6 +61,7 @@ class CoronaListFragment : Fragment(){
     }
 
     fun sortBy(sort: SortBy) {
+        currentSortBy = sort
         viewModel.filterBy(sort)
     }
 }

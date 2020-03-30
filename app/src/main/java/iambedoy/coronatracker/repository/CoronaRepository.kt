@@ -22,10 +22,16 @@ object CoronaRepository {
             .create(CoronaService::class.java)
     }
 
-    suspend fun requestCoronaData(completion: (Global, List<Country>) -> Unit){
-        val all = service.getAll()
-        val countries = service.getCountries()
+    suspend fun requestCoronaData(completion: (Global?, List<Country>) -> Unit){
+        try {
+            val all = service.getAll()
+            val countries = service.getCountries()
 
-        completion(all, countries)
+            completion(all, countries)
+        }catch (e: Exception){
+            e.printStackTrace()
+            completion(null, emptyList())
+        }
+
     }
 }

@@ -3,6 +3,7 @@ package iambedoy.coronatracker.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import iambedoy.coronatracker.models.Country
 import iambedoy.coronatracker.repository.CoronaRepository
 import iambedoy.coronatracker.models.SortBy
 import kotlinx.coroutines.GlobalScope
@@ -18,14 +19,23 @@ class CoronaViewModel : ViewModel() {
     private val _coronaList = MutableLiveData<List<Any>>()
     val coronaList : LiveData<List<Any>> = _coronaList
 
+    private var currentSortBy : SortBy = SortBy.CASES
 
     fun loadCoronaList(){
         GlobalScope.launch {
             CoronaRepository.requestCoronaData { global, list ->
                 val items = mutableListOf<Any>()
 
-                items.add(global)
-                items.addAll(list)
+                global?.let {
+                    items.add(global)
+                }
+
+                val sortCountries = sortCountries(list)
+
+                if (sortCountries.isNotEmpty()){
+                    items.add(currentSortBy)
+                    items.addAll(sortCountries)
+                }
 
                 _coronaList.postValue(items)
             }
@@ -37,28 +47,40 @@ class CoronaViewModel : ViewModel() {
             CoronaRepository.requestCoronaData { global, list ->
                 val items = mutableListOf<Any>()
 
-                items.add(global)
-
-                val sortedCountries = when (sort) {
-                    SortBy.DEATHS -> {
-                        list.sortedByDescending { it.deaths }
-                    }
-                    SortBy.CASES -> {
-                        list.sortedByDescending { it.cases }
-                    }
-                    SortBy.TODAY_CASES -> {
-                        list.sortedByDescending { it.todayCases }
-                    }
-                    SortBy.TODAY_DEATHS -> {
-                        list.sortedByDescending { it.todayDeaths }
-                    }
-                    else -> {
-                        list.sortedByDescending { it.recovered }
-                    }
+                global?.let {
+                    items.add(global)
                 }
-                items.addAll(sortedCountries)
+
+                currentSortBy = sort
+
+                val sortCountries = sortCountries(list)
+
+                if (sortCountries.isNotEmpty()){
+                    items.add(currentSortBy)
+                    items.addAll(sortCountries)
+                }
 
                 _coronaList.postValue(items)
+            }
+        }
+    }
+
+    private fun sortCountries(list: List<Country>): Collection<Country> {
+        return when (currentSortBy) {
+            SortBy.DEATHS -> {
+                list.sortedByDescending { it.deaths }
+            }
+            SortBy.CASES -> {
+                list.sortedByDescending { it.cases }
+            }
+            SortBy.TODAY_CASES -> {
+                list.sortedByDescending { it.todayCases }
+            }
+            SortBy.TODAY_DEATHS -> {
+                list.sortedByDescending { it.todayDeaths }
+            }
+            else -> {
+                list.sortedByDescending { it.recovered }
             }
         }
     }
