@@ -8,7 +8,7 @@ Track Corona Virus COVID19 cases with this Andriod Application.
 
 # How it looks
 
-<img width="240" alt="" src="https://github.com/cbedoy/Corona-Tracker/blob/master/demo_v2.png?raw=true"><img width="240" alt="" src="https://github.com/cbedoy/Corona-Tracker/blob/master/sort_demo.png?raw=true"><img width="240" alt="" src="https://github.com/cbedoy/Corona-Tracker/blob/master/credit.png?raw=true">
+<img width="240" alt="" src="https://github.com/cbedoy/Corona-Tracker/blob/master/demov2.png?raw=true">
 
 
 # Android App
