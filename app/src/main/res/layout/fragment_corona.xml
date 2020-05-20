@@ -9,6 +9,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
+        tools:listitem="@layout/country_small_cell"
         android:id="@+id/fragment_corona_recycler_view"
         android:layout_height="match_parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

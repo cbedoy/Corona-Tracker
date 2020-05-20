@@ -12,3 +12,8 @@
 /captures
 .externalNativeBuild
 .cxx
+#swagger code gen
+app/src/main/java/.swagger-codegen-ignore
+app/src/main/java/.swagger-codegen/
+app/src/main/java/iambedoy/dto/
+app/src/main/java/swagger.json

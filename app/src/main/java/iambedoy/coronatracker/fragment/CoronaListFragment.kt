@@ -8,11 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import iambedoy.coronatracker.Filter
 import iambedoy.coronatracker.R
 import iambedoy.coronatracker.adapter.CoronaAdapter
-import iambedoy.coronatracker.models.SortBy
 import iambedoy.coronatracker.viewmodel.CoronaViewModel
 import kotlinx.android.synthetic.main.fragment_corona.*
+import org.koin.android.ext.android.inject
 
 /**
  * Corona Tracker
@@ -21,13 +22,8 @@ import kotlinx.android.synthetic.main.fragment_corona.*
  */
 class CoronaListFragment : Fragment(){
 
-    private val coronaAdapter by lazy {
-        CoronaAdapter()
-    }
-
-    private val viewModel : CoronaViewModel by viewModels()
-
-    private var currentSortBy = SortBy.CASES
+    private val coronaAdapter = CoronaAdapter()
+    private val viewModel by inject<CoronaViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,11 +42,10 @@ class CoronaListFragment : Fragment(){
         fragment_corona_recycler_view.adapter = coronaAdapter
         fragment_corona_recycler_view.isNestedScrollingEnabled = false
 
-        viewModel.coronaList.observe(viewLifecycleOwner, Observer { list ->
-            coronaAdapter.dataModel = list
+        viewModel.countries.observe(viewLifecycleOwner, Observer { countries ->
+            coronaAdapter.dataModel.clear()
+            coronaAdapter.dataModel.addAll(countries)
             coronaAdapter.notifyDataSetChanged()
-
-            coronaAdapter.currentSortBy = currentSortBy
         })
      }
 
@@ -60,8 +55,7 @@ class CoronaListFragment : Fragment(){
         viewModel.loadCoronaList()
     }
 
-    fun sortBy(sort: SortBy) {
-        currentSortBy = sort
-        viewModel.filterBy(sort)
+    fun sortBy(filter: Filter) {
+        viewModel.loadCoronaList(filter)
     }
 }

@@ -12,21 +12,15 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import iambedoy.coronatracker.fragment.CoronaListFragment
-import iambedoy.coronatracker.models.SortBy
-import iambedoy.coronatracker.models.SortBy.*
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
+
+    private val fragment by inject<CoronaListFragment>()
 
     private val messageText by lazy {
         val textView = TextView(this)
         val spannableString = SpannableString(
-            "Inspired by: \n" +
-                    "https://github.com/ahmadawais/corona-cli\n" +
-                    "\n" +
-                    "\n" +
-                    "\uD83E\uDDA0 Track Corona Virus COVID19 cases with this Andriod Application.\n" +
-                    "\n" +
-                    "\n" +
                     "Android App by:\n" +
                     "- Carlos Bedoy | Android Engineer \n " +
                     "- https://www.linkedin.com/in/carlos-bedoy-34248187\n" +
@@ -42,10 +36,6 @@ class MainActivity : AppCompatActivity() {
         textView.setTextColor(ContextCompat.getColor(this, R.color.black_secondary))
         textView.movementMethod = LinkMovementMethod.getInstance()
         textView
-    }
-
-    private val fragment by lazy {
-        CoronaListFragment()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,11 +59,11 @@ class MainActivity : AppCompatActivity() {
             R.id.action_info -> {
                 AlertDialog.Builder(this).setView(messageText).show()
             }
-            R.id.action_filter_by_cases -> fragment.sortBy(CASES)
-            R.id.action_filter_by_deaths -> fragment.sortBy(DEATHS)
-            R.id.action_filter_by_recovered -> fragment.sortBy(RECOVERED)
-            R.id.action_filter_by_today_cases -> fragment.sortBy(TODAY_CASES)
-            R.id.action_filter_by_today_deaths -> fragment.sortBy(TODAY_DEATHS)
+            R.id.action_filter_by_cases -> fragment.sortBy(Filter.cases)
+            R.id.action_filter_by_deaths -> fragment.sortBy(Filter.deaths)
+            R.id.action_filter_by_recovered -> fragment.sortBy(Filter.recovered)
+            R.id.action_filter_by_today_cases -> fragment.sortBy(Filter.todayCases)
+            R.id.action_filter_by_today_deaths -> fragment.sortBy(Filter.todayDeaths)
         }
         return super.onOptionsItemSelected(item)
     }
