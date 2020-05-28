@@ -5,6 +5,8 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import iambedoy.coronatracker.ServiceApi
 import iambedoy.coronatracker.fragment.CoronaListFragment
+import iambedoy.coronatracker.fragment.CountryFragment
+import iambedoy.coronatracker.fragment.JHUListFragment
 import iambedoy.coronatracker.repository.CoronaRepository
 import iambedoy.coronatracker.viewmodel.CoronaViewModel
 import org.koin.dsl.module
@@ -50,6 +52,12 @@ val service = module {
 val fragments = module {
     factory {
         CoronaListFragment()
+    }
+    factory {
+        JHUListFragment()
+    }
+    factory {
+        CountryFragment()
     }
 }
 

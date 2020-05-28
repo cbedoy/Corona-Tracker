@@ -120,7 +120,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/roboto_mono"
                         android:text="Deaths"
-                        android:textColor="@color/red"
+                        android:textColor="@color/total_deaths_color"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -148,7 +148,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/roboto_mono"
                         android:text="Today deaths"
-                        android:textColor="@color/red"
+                        android:textColor="@color/total_deaths_color"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -176,7 +176,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/roboto_mono"
                         android:text="Recovered"
-                        android:textColor="@color/green"
+                        android:textColor="@color/recovered_color"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -232,7 +232,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/roboto_mono"
                         android:text="Critical"
-                        android:textColor="@color/yellow"
+                        android:textColor="@color/today_deaths_color"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 

@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Corona Tracker</string>
-    <string name="information">Information</string>
-    <string name="sort">Filter</string>
+    <string name="app_name">Covid19 Tracker</string>
+    <string name="information">About</string>
+    <string name="Sort">Filter</string>
     <string name="sort_by_deaths">Sort by deaths</string>
     <string name="sort_by_cases">Sort by cases</string>
     <string name="sort_by_today_cases">Sort by today cases</string>

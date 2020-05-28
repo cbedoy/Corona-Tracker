@@ -1,6 +1,8 @@
 package iambedoy.coronatracker
 
 import iambedoy.coronatracker.dto.Country
+import iambedoy.coronatracker.dto.JHUCountryState
+import iambedoy.coronatracker.dto.State
 import retrofit2.http.GET
 
 /**
@@ -11,4 +13,10 @@ import retrofit2.http.GET
 interface ServiceApi {
     @GET("/v2/countries")
     suspend fun getCountries(): List<Country>
+
+    @GET("/v2/states")
+    suspend fun getStates(): List<State>
+
+    @GET("v2/jhucsse")
+    suspend fun getJHUCountryState(): List<JHUCountryState>
 }

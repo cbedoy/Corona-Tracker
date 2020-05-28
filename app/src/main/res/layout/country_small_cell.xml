@@ -1,300 +1,273 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:background="@android:color/white"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    <data>
+        <variable
+            name="country"
+            type="iambedoy.coronatracker.dto.Country" />
+    </data>
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/corona_small_cell_country_flag"
-            tools:src="@drawable/flag_ex"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
-            android:layout_width="40dp"
-            android:layout_margin="8dp"
-            android:layout_height="24dp"/>
-
-        <TextView
-            android:id="@+id/corona_small_cell_country_name"
-            android:layout_width="0dp"
-            android:padding="8dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fontFamily="@font/roboto_mono"
-            android:text="@string/app_name"
-            android:textColor="@color/black_primary"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/corona_small_cell_info_container"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:background="#fafafa"
+        android:id="@+id/corona_small_cell_container"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
+        android:background="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageView
+                tools:src="@drawable/flag_ex"
+                app:flagUrl="@{country.countryInfo.flag}"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:layout_width="40dp"
+                android:layout_margin="8dp"
+                android:layout_height="24dp"/>
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/corona_small_cell_country_name"
+                android:layout_width="0dp"
+                android:padding="8dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:fontFamily="@font/roboto_mono"
-                android:text="Cases"
                 android:textColor="@color/black_primary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/corona_cell_cases_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto"
-                android:gravity="right"
-                android:text="Cases"
-                android:textSize="16sp"
-                android:textStyle="normal" />
-
         </LinearLayout>
 
+
         <LinearLayout
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:orientation="horizontal"
+            android:visibility="gone"
+            android:id="@+id/corona_small_cell_info_container"
+            android:background="#fafafa"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_mono"
-                android:text="Today cases"
-                android:textColor="@color/black_primary"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/corona_cell_today_cases_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto"
-                android:gravity="right"
-                android:text="Cases"
-                android:textSize="16sp"
-                android:textStyle="normal" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_mono"
-                android:text="Deaths"
-                android:textColor="@color/red"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/corona_cell_deaths_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto"
-                android:gravity="right"
-                android:text="Cases"
-                android:textSize="16sp"
-                android:textStyle="normal" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_mono"
-                android:text="Today deaths"
-                android:textColor="@color/red"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/corona_cell_today_deaths_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto"
-                android:gravity="right"
-                android:text="Cases"
-                android:textSize="16sp"
-                android:textStyle="normal" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_mono"
-                android:text="Recovered"
-                android:textColor="@color/green"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/corona_cell_recovered_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto"
-                android:gravity="right"
-                android:text="Cases"
-                android:textSize="16sp"
-                android:textStyle="normal" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
+            <LinearLayout
+                android:padding="4dp"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_mono"
-                android:text="Active"
-                android:textColor="@color/black_primary"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/corona_cell_active_text"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_mono"
+                    android:text="Cases"
+                    android:textColor="@color/black_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="right"
+                    android:text="@{String.valueOf(country.cases)}"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="4dp"
+                android:background="@color/total_cases_color"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto"
-                android:gravity="right"
-                android:text="Cases"
-                android:textSize="16sp"
-                android:textStyle="normal" />
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_mono"
+                    android:text="Today cases"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="right"
+                    android:textColor="@android:color/white"
+                    android:text="@{String.valueOf(country.todayCases)}"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@color/total_deaths_color"
+                android:padding="4dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/white"
+                    android:fontFamily="@font/roboto_mono"
+                    android:text="Deaths"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto"
+                    android:textColor="@android:color/white"
+                    android:gravity="right"
+                    android:text="@{String.valueOf(country.deaths)}"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="4dp"
+                android:background="@color/today_deaths_color"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/white"
+                    android:fontFamily="@font/roboto_mono"
+                    android:text="Today deaths"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/white"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="right"
+                    android:text="@{String.valueOf(country.todayDeaths)}"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="4dp"
+                android:background="@color/recovered_color"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/white"
+                    android:fontFamily="@font/roboto_mono"
+                    android:text="Recovered"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/white"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="right"
+                    android:text="@{String.valueOf(country.recovered)}"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="4dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_mono"
+                    android:text="Active"
+                    android:textColor="@color/black_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="right"
+                    android:text="@{String.valueOf(country.active)}"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="4dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/black_primary"
+                    android:fontFamily="@font/roboto_mono"
+                    android:text="Critical"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="right"
+                    android:textColor="@color/black_primary"
+                    android:text="@{String.valueOf(country.critical)}"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:orientation="horizontal"
+        <View
+            android:background="#11333333"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="1dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_mono"
-                android:text="Critical"
-                android:textColor="@color/yellow"
-                android:textSize="16sp"
-                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/corona_cell_critical_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto"
-                android:gravity="right"
-                android:text="Cases"
-                android:textSize="16sp"
-                android:textStyle="normal" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_mono"
-                android:text="Cases per one million"
-                android:textColor="@color/black_primary"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/corona_cell_cases_per_one_million_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto"
-                android:gravity="right"
-                android:text="Cases"
-                android:textSize="16sp"
-                android:textStyle="normal" />
-
-        </LinearLayout>
     </LinearLayout>
 
-    <View
-        android:background="#11333333"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
 
 
-</LinearLayout>
-
-
+</layout>
