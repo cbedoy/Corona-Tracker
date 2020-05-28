@@ -115,7 +115,8 @@ class CoronaListFragment : Fragment(){
         val spannableString = SpannableString(
             "- Carlos Bedoy | Android Engineer \n\n " +
                     "https://www.linkedin.com/in/carlos-bedoy-34248187\n" +
-                    "http://cbedoy.github.io\n"
+                    "http://cbedoy.github.io\n\n" +
+                    "Line by line, code by code, logic and syntax, my dream explodes."
         )
         Linkify.addLinks(spannableString, Linkify.WEB_URLS);
         textView.text = spannableString

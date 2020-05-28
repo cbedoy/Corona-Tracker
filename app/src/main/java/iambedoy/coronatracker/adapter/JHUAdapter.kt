@@ -25,6 +25,7 @@ class JHUAdapter : RecyclerView.Adapter<JHUViewHolder>() {
     private var dataSource = mutableListOf<JHUItemType>()
 
     fun setDataSource(map: Map<String, MutableList<JHUCountryState>>){
+        dataSource.clear()
         map.map { (key, value) ->
             dataSource.add(Header(key))
             dataSource.addAll(value.map {
