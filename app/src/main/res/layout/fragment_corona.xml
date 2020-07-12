@@ -10,7 +10,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        tools:listitem="@layout/country_small_cell"
+        tools:listitem="@layout/country_cell"
         android:id="@+id/common_recycler_view"
         android:layout_height="match_parent" />
 

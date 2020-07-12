@@ -5,12 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import iambedoy.coronatracker.Filter
 import iambedoy.coronatracker.dto.Country
+import iambedoy.coronatracker.dto.Global
 import iambedoy.coronatracker.dto.JHUCountryState
 import iambedoy.coronatracker.repository.CoronaRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 /**
  * Corona Tracker
@@ -22,12 +20,16 @@ class CoronaViewModel(private val repository: CoronaRepository) : ViewModel() {
     private val _countries = MutableLiveData<List<Country>>()
     var countries : LiveData<List<Country>> = _countries
 
-    private val _states = MutableLiveData<Map<String, MutableList<JHUCountryState>> >()
-    var states : LiveData<Map<String, MutableList<JHUCountryState>> > = _states
+    private val _global = MutableLiveData<Global>()
+    var global : LiveData<Global> = _global
 
+    private val _states = MutableLiveData<Map<String, MutableList<JHUCountryState>> >()
+    var states : LiveData<Map<String, MutableList<JHUCountryState>>> = _states
 
     private val _loadingState = MutableLiveData<Boolean>()
     var loadingState : LiveData<Boolean> = _loadingState
+
+    private val networkScope = CoroutineScope(Job() + Dispatchers.IO)
 
     private var _dataSource : List<Country> = emptyList()
         set(value) {
@@ -48,32 +50,29 @@ class CoronaViewModel(private val repository: CoronaRepository) : ViewModel() {
     private var _searching = false
 
     fun loadJHUData() {
-        GlobalScope.launch {
+        networkScope.launch {
             _loadingState.postValue(true)
-            withContext(Dispatchers.Default){
-                repository.requestJHUData().let {
-                    _jhuDataSource = it
-                }
+            repository.requestJHUData().let {
+                _jhuDataSource = it
             }
         }
     }
 
     fun loadJHUDataWithCountry(country: String) {
-        GlobalScope.launch {
+        networkScope.launch {
             _loadingState.postValue(true)
-            withContext(Dispatchers.Default){
-                repository.requestJHUDataWithCountry(country).let {
-                    _jhuDataSource = it
-                }
+            repository.requestJHUDataWithCountry(country).let {
+                _jhuDataSource = it
             }
         }
     }
 
-    fun loadCoronaList(filter: Filter = Filter.cases){
-        GlobalScope.launch {
+    fun loadCountryList(filter: Filter = Filter.cases){
+        networkScope.launch {
             _loadingState.postValue(true)
-            withContext(Dispatchers.Default){
-                _dataSource = repository.requestCountries(filter)
+            _dataSource = repository.requestCountries(filter)
+            repository.requestGlobal()?.let {
+                _global.postValue(it)
             }
         }
     }
@@ -82,7 +81,7 @@ class CoronaViewModel(private val repository: CoronaRepository) : ViewModel() {
         _searching = query.length > 1
 
         if (_searching ){
-            GlobalScope.launch (Dispatchers.Main){
+            networkScope.launch (Dispatchers.Main){
                 val filteredCountries = _dataSource.filter {
                     it.country?.contains(query, ignoreCase = true) == true
                 }

@@ -1,6 +1,5 @@
-package iambedoy.coronatracker.fragment
+package iambedoy.coronatracker.fragment.countries
 
-import android.content.res.Resources
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
@@ -13,22 +12,29 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil.api.load
 import iambedoy.coronatracker.Filter
 import iambedoy.coronatracker.R
-import iambedoy.coronatracker.adapter.CoronaAdapter
 import iambedoy.coronatracker.viewmodel.CoronaViewModel
+import iambedoy.formattedCountry
+import iambedoy.px
+import iambedoy.setCollapseExpand
+import kotlinx.android.synthetic.main.country_cell.*
+import kotlinx.android.synthetic.main.details_view.*
 import kotlinx.android.synthetic.main.fragment_corona.*
 import org.koin.android.ext.android.inject
+import zlc.season.yasha.linear
 
 /**
  * Corona Tracker
  *
  * Created by bedoy on 22/03/20.
  */
-class CoronaListFragment : Fragment(){
+class CountryListFragment : Fragment(){
 
-    private val coronaAdapter = CoronaAdapter()
     private val viewModel by inject<CoronaViewModel>()
+
+    private val dataSource = CountryListDataSource()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,14 +52,58 @@ class CoronaListFragment : Fragment(){
 
         common_progress_bar.visibility = View.VISIBLE
         common_recycler_view.layoutManager = linearLayoutManager
-        common_recycler_view.adapter = coronaAdapter
         common_recycler_view.isNestedScrollingEnabled = false
 
+        common_recycler_view.linear(
+            dataSource = dataSource,
+            block = {
+                renderItem<GlobalItem> {
+                    res(R.layout.global_cell)
+
+                    onBind {
+                        details_container.visibility = View.VISIBLE
+                        cases_count_view.text = "${data.global.cases}"
+                        today_cases_count_view.text = "${data.global.todayCases}"
+                        deaths_count_view.text = "${data.global.deaths}"
+                        today_deaths_count_view.text = "${data.global.todayCases}"
+                        recovered_count_view.text = "${data.global.recovered}"
+                        active_count_view.text = "${data.global.active}"
+                        critical_count_view.text = "${data.global.critical}"
+                    }
+                }
+                renderItem<CountryItem> {
+                    res(R.layout.country_cell)
+
+                    onBind {
+                        country_name_view.text = data.country.formattedCountry(country_name_view)
+                        country_name_view.setCollapseExpand(details_container, {
+
+                        }, {
+
+                        })
+                        country_flag_view.load(data.country.countryInfo?.flag)
+                        cases_count_view.text = "${data.country.cases}"
+                        today_cases_count_view.text = "${data.country.todayCases}"
+                        deaths_count_view.text = "${data.country.deaths}"
+                        today_deaths_count_view.text = "${data.country.todayCases}"
+                        recovered_count_view.text = "${data.country.recovered}"
+                        active_count_view.text = "${data.country.active}"
+                        critical_count_view.text = "${data.country.critical}"
+                    }
+                }
+            }
+        )
         viewModel.countries.observe(viewLifecycleOwner, Observer { countries ->
-            coronaAdapter.dataModel.clear()
-            coronaAdapter.dataModel.addAll(countries)
-            coronaAdapter.notifyDataSetChanged()
+            dataSource.cleanUp()
+            dataSource.addItems(
+                countries.map {
+                    CountryItem(it)
+                }
+            )
             common_progress_bar.visibility = View.GONE
+        })
+        viewModel.global.observe(viewLifecycleOwner, Observer {  global ->
+            dataSource.addHeader(GlobalItem(global))
         })
     }
 
@@ -99,11 +149,11 @@ class CoronaListFragment : Fragment(){
     override fun onResume() {
         super.onResume()
 
-        viewModel.loadCoronaList()
+        viewModel.loadCountryList()
     }
 
     private fun sortBy(filter: Filter) {
-        viewModel.loadCoronaList(filter)
+        viewModel.loadCountryList(filter)
     }
 
     private fun onQuery(query: String?) {
@@ -127,10 +177,4 @@ class CoronaListFragment : Fragment(){
         textView.movementMethod = LinkMovementMethod.getInstance()
         textView
     }
-
-
-    val Int.dp: Int
-        get() = (this / Resources.getSystem().displayMetrics.density).toInt()
-    val Int.px: Int
-        get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 }

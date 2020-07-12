@@ -1,6 +1,8 @@
 package iambedoy.coronatracker
 
+import com.haroldadmin.cnradapter.NetworkResponse
 import iambedoy.coronatracker.dto.Country
+import iambedoy.coronatracker.dto.Global
 import iambedoy.coronatracker.dto.JHUCountryState
 import iambedoy.coronatracker.dto.State
 import retrofit2.http.GET
@@ -12,11 +14,14 @@ import retrofit2.http.GET
  */
 interface ServiceApi {
     @GET("/v2/countries")
-    suspend fun getCountries(): List<Country>
+    suspend fun getCountries(): NetworkResponse<List<Country>, Void>
 
     @GET("/v2/states")
-    suspend fun getStates(): List<State>
+    suspend fun getStates(): NetworkResponse<List<State>, Void>
 
     @GET("v2/jhucsse")
-    suspend fun getJHUCountryState(): List<JHUCountryState>
+    suspend fun getJHUCountryState(): NetworkResponse<List<JHUCountryState>, Void>
+
+    @GET("/v2/all")
+    suspend fun getAll(): NetworkResponse<Global, String>
 }

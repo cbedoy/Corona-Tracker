@@ -1,10 +1,11 @@
 package iambedoy
 
+import com.haroldadmin.cnradapter.NetworkResponseAdapterFactory
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import iambedoy.coronatracker.ServiceApi
-import iambedoy.coronatracker.fragment.CoronaListFragment
+import iambedoy.coronatracker.fragment.countries.CountryListFragment
 import iambedoy.coronatracker.fragment.CountryFragment
 import iambedoy.coronatracker.fragment.JHUListFragment
 import iambedoy.coronatracker.repository.CoronaRepository
@@ -27,6 +28,7 @@ private val moshi = Moshi.Builder()
 
 val retrofit: Retrofit = Retrofit.Builder()
     .baseUrl("https://disease.sh")
+    .addCallAdapterFactory(NetworkResponseAdapterFactory())
     .addConverterFactory(MoshiConverterFactory.create(moshi))
     .addCallAdapterFactory(CoroutineCallAdapterFactory())
     .build()
@@ -51,7 +53,7 @@ val service = module {
 
 val fragments = module {
     factory {
-        CoronaListFragment()
+        CountryListFragment()
     }
     factory {
         JHUListFragment()

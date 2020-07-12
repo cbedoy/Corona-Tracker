@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import iambedoy.coronatracker.R
-import iambedoy.coronatracker.adapter.JHUAdapter
+import iambedoy.coronatracker.adapter.jhu.JHUAdapter
 import iambedoy.coronatracker.viewmodel.CoronaViewModel
 import kotlinx.android.synthetic.main.fragment_corona.*
 import org.koin.android.ext.android.inject
