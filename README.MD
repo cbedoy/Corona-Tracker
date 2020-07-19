@@ -1,4 +1,4 @@
-# Corona-Tracker
+# Corona-Tracker  [![Build Status](https://travis-ci.com/cbedoy/Corona-Tracker.svg?branch=master)](https://travis-ci.com/cbedoy/Corona-Tracker)
 
 
 Inspired by: 
