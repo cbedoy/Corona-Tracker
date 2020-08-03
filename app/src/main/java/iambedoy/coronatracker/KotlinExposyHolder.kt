@@ -1,9 +1,9 @@
 package iambedoy.coronatracker
 
-import android.graphics.drawable.Drawable
 import android.view.View
-import android.widget.TextView
-import androidx.core.content.ContextCompat
+import com.airbnb.epoxy.EpoxyHolder
+import kotlin.properties.ReadOnlyProperty
+import kotlin.reflect.KProperty
 
 /**
  * Corona Tracker

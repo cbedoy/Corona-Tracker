@@ -37,6 +37,9 @@ android {
         enabled = true
     }
 
+    kapt {
+        correctErrorTypes = true
+    }
 
 }
 
@@ -57,6 +60,10 @@ dependencies {
 
     implementation 'com.github.ssseasonnn:Yasha:1.0.8'
     implementation "com.github.haroldadmin:NetworkResponseAdapter:4.0.1"
+
+    implementation 'com.airbnb.android:epoxy:3.11.0'
+    // Add the annotation processor if you are using Epoxy's annotations (recommended)
+    kapt 'com.airbnb.android:epoxy-processor:3.11.0'
 
     // Moshi + OkHttp + Retrofit
     implementation "com.squareup.moshi:moshi:1.9.2"

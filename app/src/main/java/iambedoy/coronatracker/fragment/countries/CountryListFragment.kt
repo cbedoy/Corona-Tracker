@@ -12,18 +12,17 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import coil.api.load
+import com.airbnb.epoxy.EpoxyVisibilityTracker
 import iambedoy.coronatracker.Filter
 import iambedoy.coronatracker.R
+import iambedoy.coronatracker.fragment.countries.epoxy.CountryModel
+import iambedoy.coronatracker.fragment.countries.epoxy.GlobalModel
 import iambedoy.coronatracker.viewmodel.CoronaViewModel
-import iambedoy.formattedCountry
 import iambedoy.px
-import iambedoy.setCollapseExpand
-import kotlinx.android.synthetic.main.country_cell.*
-import kotlinx.android.synthetic.main.details_view.*
 import kotlinx.android.synthetic.main.fragment_corona.*
+import kotlinx.android.synthetic.main.fragment_corona.common_progress_bar
+import kotlinx.android.synthetic.main.fragment_eposy.*
 import org.koin.android.ext.android.inject
-import zlc.season.yasha.linear
 
 /**
  * Corona Tracker
@@ -34,15 +33,13 @@ class CountryListFragment : Fragment(){
 
     private val viewModel by inject<CoronaViewModel>()
 
-    private val dataSource = CountryListDataSource()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_corona, container, false)
+        return inflater.inflate(R.layout.fragment_eposy, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,59 +48,26 @@ class CountryListFragment : Fragment(){
         val linearLayoutManager = LinearLayoutManager(context)
 
         common_progress_bar.visibility = View.VISIBLE
-        common_recycler_view.layoutManager = linearLayoutManager
-        common_recycler_view.isNestedScrollingEnabled = false
 
-        common_recycler_view.linear(
-            dataSource = dataSource,
-            block = {
-                renderItem<GlobalItem> {
-                    res(R.layout.global_cell)
+        val epoxyVisibilityTracker = EpoxyVisibilityTracker()
+        epoxyVisibilityTracker.setPartialImpressionThresholdPercentage(75)
+        epoxyVisibilityTracker.attach(epoxy_recycler_view)
 
-                    onBind {
-                        details_container.visibility = View.VISIBLE
-                        cases_count_view.text = "${data.global.cases}"
-                        today_cases_count_view.text = "${data.global.todayCases}"
-                        deaths_count_view.text = "${data.global.deaths}"
-                        today_deaths_count_view.text = "${data.global.todayCases}"
-                        recovered_count_view.text = "${data.global.recovered}"
-                        active_count_view.text = "${data.global.active}"
-                        critical_count_view.text = "${data.global.critical}"
-                    }
-                }
-                renderItem<CountryItem> {
-                    res(R.layout.country_cell)
 
-                    onBind {
-                        country_name_view.text = data.country.formattedCountry(country_name_view)
-                        country_name_view.setCollapseExpand(details_container, {
-
-                        }, {
-
-                        })
-                        country_flag_view.load(data.country.countryInfo?.flag)
-                        cases_count_view.text = "${data.country.cases}"
-                        today_cases_count_view.text = "${data.country.todayCases}"
-                        deaths_count_view.text = "${data.country.deaths}"
-                        today_deaths_count_view.text = "${data.country.todayCases}"
-                        recovered_count_view.text = "${data.country.recovered}"
-                        active_count_view.text = "${data.country.active}"
-                        critical_count_view.text = "${data.country.critical}"
-                    }
-                }
-            }
-        )
         viewModel.countries.observe(viewLifecycleOwner, Observer { countries ->
-            dataSource.cleanUp()
-            dataSource.addItems(
+            epoxy_recycler_view.withModels {
                 countries.map {
-                    CountryItem(it)
-                }
-            )
+                    CountryModel(
+                        it
+                    )
+                }.toList()
+            }
             common_progress_bar.visibility = View.GONE
         })
         viewModel.global.observe(viewLifecycleOwner, Observer {  global ->
-            dataSource.addHeader(GlobalItem(global))
+            epoxy_recycler_view.withModels {
+                GlobalModel(global = global)
+            }
         })
     }
 
