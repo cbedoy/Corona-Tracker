@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_countries"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_global"
+        android:title="Countries"/>
+    <item
+        android:id="@+id/action_states"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_states"
+        android:title="States"/>
+    <item
+        android:id="@+id/action_mex"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_mexico"
+        android:title="Mexico"/>
+</menu>

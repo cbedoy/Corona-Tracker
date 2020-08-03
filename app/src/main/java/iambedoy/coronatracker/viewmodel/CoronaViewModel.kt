@@ -3,86 +3,105 @@ package iambedoy.coronatracker.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import iambedoy.coronatracker.models.Country
+import com.xwray.groupie.kotlinandroidextensions.Item
+import iambedoy.coronatracker.Filter
+import iambedoy.coronatracker.dto.Country
+import iambedoy.coronatracker.dto.Global
+import iambedoy.coronatracker.dto.JHUCountryState
+import iambedoy.coronatracker.fragment.countries.items.CountryItem
+import iambedoy.coronatracker.fragment.countries.items.GlobalItem
 import iambedoy.coronatracker.repository.CoronaRepository
-import iambedoy.coronatracker.models.SortBy
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 /**
  * Corona Tracker
  *
  * Created by bedoy on 22/03/20.
  */
-class CoronaViewModel : ViewModel() {
+class CoronaViewModel(private val repository: CoronaRepository) : ViewModel() {
 
-    private val _coronaList = MutableLiveData<List<Any>>()
-    val coronaList : LiveData<List<Any>> = _coronaList
+    private val _items = MutableLiveData<List<Item>> ()
+    val items: LiveData<List<Item>>
+        get() = _items
 
-    private var currentSortBy : SortBy = SortBy.CASES
+    private val _states = MutableLiveData<Map<String, MutableList<JHUCountryState>> >()
+    var states : LiveData<Map<String, MutableList<JHUCountryState>>> = _states
 
-    fun loadCoronaList(){
-        GlobalScope.launch {
-            CoronaRepository.requestCoronaData { global, list ->
-                val items = mutableListOf<Any>()
+    private val _loadingState = MutableLiveData<Boolean>()
+    var loadingState : LiveData<Boolean> = _loadingState
 
-                global?.let {
-                    items.add(global)
-                }
+    private val networkScope = CoroutineScope(Job() + Dispatchers.IO)
 
-                val sortCountries = sortCountries(list)
+    private var _dataSource : List<Country> = emptyList()
+        set(value) {
+            field = value
 
-                if (sortCountries.isNotEmpty()){
-                    items.add(currentSortBy)
-                    items.addAll(sortCountries)
-                }
+            _loadingState.postValue(false)
+        }
 
-                _coronaList.postValue(items)
+    private var _jhuDataSource : Map<String, MutableList<JHUCountryState>>  = emptyMap()
+        set(value) {
+            field = value
+
+            _states.postValue(value)
+            _loadingState.postValue(false)
+        }
+
+    private var _searching = false
+
+    fun loadJHUData() {
+        networkScope.launch {
+            _loadingState.postValue(true)
+            repository.requestJHUData().let {
+                _jhuDataSource = it
             }
         }
     }
 
-    fun filterBy(sort: SortBy) {
-        GlobalScope.launch {
-            CoronaRepository.requestCoronaData { global, list ->
-                val items = mutableListOf<Any>()
-
-                global?.let {
-                    items.add(global)
-                }
-
-                currentSortBy = sort
-
-                val sortCountries = sortCountries(list)
-
-                if (sortCountries.isNotEmpty()){
-                    items.add(currentSortBy)
-                    items.addAll(sortCountries)
-                }
-
-                _coronaList.postValue(items)
+    fun loadJHUDataWithCountry(country: String) {
+        networkScope.launch {
+            _loadingState.postValue(true)
+            repository.requestJHUDataWithCountry(country).let {
+                _jhuDataSource = it
             }
         }
     }
 
-    private fun sortCountries(list: List<Country>): Collection<Country> {
-        return when (currentSortBy) {
-            SortBy.DEATHS -> {
-                list.sortedByDescending { it.deaths }
+    fun loadCountryList(filter: Filter = Filter.cases){
+        networkScope.launch {
+            _loadingState.postValue(true)
+
+            val globalRequest = async { repository.requestGlobal() }
+            val countriesRequest = async { repository.requestCountries(filter) }
+
+            _dataSource = countriesRequest.await()
+
+            val mutableListOf = mutableListOf<Item>()
+
+            globalRequest.await()?.let {
+                mutableListOf.add(GlobalItem(it))
             }
-            SortBy.CASES -> {
-                list.sortedByDescending { it.cases }
+
+            _dataSource.map {
+                mutableListOf.add(CountryItem(it))
             }
-            SortBy.TODAY_CASES -> {
-                list.sortedByDescending { it.todayCases }
-            }
-            SortBy.TODAY_DEATHS -> {
-                list.sortedByDescending { it.todayDeaths }
-            }
-            else -> {
-                list.sortedByDescending { it.recovered }
-            }
+
+            _items.postValue(mutableListOf)
         }
     }
 
+    fun filterCoronaListWithQuery(query: String) {
+        _searching = query.length > 1
+
+        if (_searching ){
+            networkScope.launch (Dispatchers.Main){
+                val filteredCountries = _dataSource.filter {
+                    it.country?.contains(query, ignoreCase = true) == true
+                }
+                //_countries.postValue(filteredCountries)
+            }
+        }else{
+            //_countries.postValue(_dataSource)
+        }
+    }
 }

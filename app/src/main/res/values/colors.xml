@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#212121</color>
+    <color name="colorPrimary">#333</color>
     <color name="colorPrimaryDark">#212121</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorAccent">#333</color>
 
     <color name="black_primary">#333</color>
     <color name="black_secondary">#666</color>
     <color name="black_tint">#999</color>
 
-    <color name="darkBlue">#173f5f</color>
-    <color name="blue">#20639B</color>
-    <color name="green">#3CAEA3</color>
-    <color name="yellow">#F6D55C</color>
-    <color name="red">#ED553B</color>
-    <color name="backgroundColor">#e0e0e0</color>
+    <color name="total_cases_color">#3A86FF</color>
+    <color name="recovered_color">#8338EC</color>
+    <color name="today_deaths_color">#FB5607</color>
+    <color name="total_deaths_color">#FF006E</color>
+    <color name="backgroundColor">#f0f0f0</color>
 </resources>
