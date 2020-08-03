@@ -3,10 +3,13 @@ package iambedoy.coronatracker.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.xwray.groupie.kotlinandroidextensions.Item
 import iambedoy.coronatracker.Filter
 import iambedoy.coronatracker.dto.Country
 import iambedoy.coronatracker.dto.Global
 import iambedoy.coronatracker.dto.JHUCountryState
+import iambedoy.coronatracker.fragment.countries.items.CountryItem
+import iambedoy.coronatracker.fragment.countries.items.GlobalItem
 import iambedoy.coronatracker.repository.CoronaRepository
 import kotlinx.coroutines.*
 
@@ -17,11 +20,9 @@ import kotlinx.coroutines.*
  */
 class CoronaViewModel(private val repository: CoronaRepository) : ViewModel() {
 
-    private val _countries = MutableLiveData<List<Country>>()
-    var countries : LiveData<List<Country>> = _countries
-
-    private val _global = MutableLiveData<Global>()
-    var global : LiveData<Global> = _global
+    private val _items = MutableLiveData<List<Item>> ()
+    val items: LiveData<List<Item>>
+        get() = _items
 
     private val _states = MutableLiveData<Map<String, MutableList<JHUCountryState>> >()
     var states : LiveData<Map<String, MutableList<JHUCountryState>>> = _states
@@ -35,7 +36,6 @@ class CoronaViewModel(private val repository: CoronaRepository) : ViewModel() {
         set(value) {
             field = value
 
-            _countries.postValue(value)
             _loadingState.postValue(false)
         }
 
@@ -70,10 +70,23 @@ class CoronaViewModel(private val repository: CoronaRepository) : ViewModel() {
     fun loadCountryList(filter: Filter = Filter.cases){
         networkScope.launch {
             _loadingState.postValue(true)
-            _dataSource = repository.requestCountries(filter)
-            repository.requestGlobal()?.let {
-                _global.postValue(it)
+
+            val globalRequest = async { repository.requestGlobal() }
+            val countriesRequest = async { repository.requestCountries(filter) }
+
+            _dataSource = countriesRequest.await()
+
+            val mutableListOf = mutableListOf<Item>()
+
+            globalRequest.await()?.let {
+                mutableListOf.add(GlobalItem(it))
             }
+
+            _dataSource.map {
+                mutableListOf.add(CountryItem(it))
+            }
+
+            _items.postValue(mutableListOf)
         }
     }
 
@@ -85,10 +98,10 @@ class CoronaViewModel(private val repository: CoronaRepository) : ViewModel() {
                 val filteredCountries = _dataSource.filter {
                     it.country?.contains(query, ignoreCase = true) == true
                 }
-                _countries.postValue(filteredCountries)
+                //_countries.postValue(filteredCountries)
             }
         }else{
-            _countries.postValue(_dataSource)
+            //_countries.postValue(_dataSource)
         }
     }
 }

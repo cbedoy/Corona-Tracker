@@ -51,8 +51,8 @@ fun TextView.setPrimaryTextColor() = setTextColor(ContextCompat.getColor(context
 
 fun View.totalCasesColor() = ContextCompat.getColor(context, R.color.total_cases_color)
 fun View.deathsColor() = ContextCompat.getColor(context, R.color.total_deaths_color)
-fun View.primaryTextColor() = ContextCompat.getColor(context, R.color.black_primary)
-fun View.secondaryTextColor() = ContextCompat.getColor(context, R.color.black_secondary)
+fun View.primaryTextColor() = ContextCompat.getColor(context, android.R.color.white)
+fun View.secondaryTextColor() = ContextCompat.getColor(context, android.R.color.white)
 
 val Int.dp: Int
     get() = (this / Resources.getSystem().displayMetrics.density).toInt()

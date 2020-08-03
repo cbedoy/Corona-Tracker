@@ -12,16 +12,13 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.airbnb.epoxy.EpoxyVisibilityTracker
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import iambedoy.coronatracker.Filter
 import iambedoy.coronatracker.R
-import iambedoy.coronatracker.fragment.countries.epoxy.CountryModel
-import iambedoy.coronatracker.fragment.countries.epoxy.GlobalModel
 import iambedoy.coronatracker.viewmodel.CoronaViewModel
 import iambedoy.px
 import kotlinx.android.synthetic.main.fragment_corona.*
-import kotlinx.android.synthetic.main.fragment_corona.common_progress_bar
-import kotlinx.android.synthetic.main.fragment_eposy.*
 import org.koin.android.ext.android.inject
 
 /**
@@ -32,6 +29,7 @@ import org.koin.android.ext.android.inject
 class CountryListFragment : Fragment(){
 
     private val viewModel by inject<CoronaViewModel>()
+    private val adapter = GroupAdapter<GroupieViewHolder>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,35 +37,20 @@ class CountryListFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_eposy, container, false)
+        return inflater.inflate(R.layout.fragment_corona, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val linearLayoutManager = LinearLayoutManager(context)
+        common_recycler_view.layoutManager = LinearLayoutManager(context)
+        common_recycler_view.adapter = adapter
 
         common_progress_bar.visibility = View.VISIBLE
 
-        val epoxyVisibilityTracker = EpoxyVisibilityTracker()
-        epoxyVisibilityTracker.setPartialImpressionThresholdPercentage(75)
-        epoxyVisibilityTracker.attach(epoxy_recycler_view)
-
-
-        viewModel.countries.observe(viewLifecycleOwner, Observer { countries ->
-            epoxy_recycler_view.withModels {
-                countries.map {
-                    CountryModel(
-                        it
-                    )
-                }.toList()
-            }
+        viewModel.items.observe(viewLifecycleOwner, Observer { items ->
+            adapter.addAll(items)
             common_progress_bar.visibility = View.GONE
-        })
-        viewModel.global.observe(viewLifecycleOwner, Observer {  global ->
-            epoxy_recycler_view.withModels {
-                GlobalModel(global = global)
-            }
         })
     }
 
