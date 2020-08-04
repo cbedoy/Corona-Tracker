@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
+    android:background="@color/colorPrimaryDark"
     xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
@@ -14,12 +14,12 @@
         android:layout_height="match_parent"
         android:maxLines="1"
         android:fontFamily="@font/roboto_mono"
-        android:textColor="@color/black_secondary"
+        android:textColor="@android:color/white"
         android:textSize="14sp"
         android:textStyle="bold" />
     <View
-        android:background="@color/backgroundColor"
+        android:background="@color/black_tint"
         android:layout_width="match_parent"
         android:layout_marginStart="8dp"
-        android:layout_height="1dp"/>
+        android:layout_height="1px"/>
 </LinearLayout>

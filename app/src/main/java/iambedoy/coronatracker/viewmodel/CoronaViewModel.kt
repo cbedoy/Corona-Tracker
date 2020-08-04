@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.xwray.groupie.kotlinandroidextensions.Item
 import iambedoy.coronatracker.Filter
+import iambedoy.coronatracker.adapter.jhu.StateItem
 import iambedoy.coronatracker.dto.Country
 import iambedoy.coronatracker.dto.Global
 import iambedoy.coronatracker.dto.JHUCountryState
@@ -24,13 +25,16 @@ class CoronaViewModel(private val repository: CoronaRepository) : ViewModel() {
     val items: LiveData<List<Item>>
         get() = _items
 
-    private val _states = MutableLiveData<Map<String, MutableList<JHUCountryState>> >()
-    var states : LiveData<Map<String, MutableList<JHUCountryState>>> = _states
+    private val _states = MutableLiveData<List<StateItem>>()
+    val states : LiveData<List<StateItem>>
+        get() = _states
 
     private val _loadingState = MutableLiveData<Boolean>()
     var loadingState : LiveData<Boolean> = _loadingState
 
     private val networkScope = CoroutineScope(Job() + Dispatchers.IO)
+
+    private var _targetCountry = ""
 
     private var _dataSource : List<Country> = emptyList()
         set(value) {
@@ -42,8 +46,9 @@ class CoronaViewModel(private val repository: CoronaRepository) : ViewModel() {
     private var _jhuDataSource : Map<String, MutableList<JHUCountryState>>  = emptyMap()
         set(value) {
             field = value
-
-            _states.postValue(value)
+            _states.postValue(field[_targetCountry]?.map {
+                StateItem(it)
+            })
             _loadingState.postValue(false)
         }
 
@@ -61,6 +66,7 @@ class CoronaViewModel(private val repository: CoronaRepository) : ViewModel() {
     fun loadJHUDataWithCountry(country: String) {
         networkScope.launch {
             _loadingState.postValue(true)
+            _targetCountry = country
             repository.requestJHUDataWithCountry(country).let {
                 _jhuDataSource = it
             }

@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import iambedoy.coronatracker.R
-import iambedoy.coronatracker.adapter.jhu.JHUAdapter
 import iambedoy.coronatracker.viewmodel.CoronaViewModel
 import kotlinx.android.synthetic.main.fragment_corona.*
 import org.koin.android.ext.android.inject
@@ -19,7 +20,7 @@ import org.koin.android.ext.android.inject
  * Created by bedoy on 28/05/20.
  */
 class JHUListFragment : Fragment(){
-    private val adapter = JHUAdapter()
+    private val adapter = GroupAdapter<GroupieViewHolder>()
     private val viewModel by inject<CoronaViewModel>()
 
     override fun onCreateView(
@@ -41,10 +42,10 @@ class JHUListFragment : Fragment(){
         common_recycler_view.layoutManager = linearLayoutManager
         common_recycler_view.isNestedScrollingEnabled = false
 
-        viewModel.states.observe(viewLifecycleOwner, Observer { countries ->
-            adapter.setDataSource(countries)
-            common_progress_bar.visibility = View.GONE
-        })
+        //viewModel.states.observe(viewLifecycleOwner, Observer { countries ->
+        //    adapter.setDataSource(countries)
+        //    common_progress_bar.visibility = View.GONE
+        //})
     }
 
     override fun onResume() {

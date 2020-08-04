@@ -3,6 +3,7 @@ package iambedoy.coronatracker
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import iambedoy.coronatracker.fragment.CountryDetailFragment
 import iambedoy.coronatracker.fragment.countries.CountryListFragment
 import iambedoy.coronatracker.fragment.CountryFragment
 import iambedoy.coronatracker.fragment.JHUListFragment
@@ -14,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     private val fragment by inject<CountryListFragment>()
     private val jhuListFragment by inject<JHUListFragment>()
     private val countryFragment by inject<CountryFragment>()
+    private val detailFragment by inject<CountryDetailFragment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,12 +24,12 @@ class MainActivity : AppCompatActivity() {
         bottom_navigation.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.action_countries -> showFragment(fragment)
-                R.id.action_states -> showFragment(jhuListFragment)
+                R.id.action_states -> showFragment(detailFragment)
                 R.id.action_mex -> showFragment(countryFragment)
             }
             true
         }
-        bottom_navigation.selectedItemId = R.id.action_countries
+        bottom_navigation.selectedItemId = R.id.action_states
     }
 
     private fun showFragment(fragment: Fragment){

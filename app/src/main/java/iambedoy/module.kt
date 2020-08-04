@@ -5,11 +5,13 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import iambedoy.coronatracker.ServiceApi
+import iambedoy.coronatracker.fragment.CountryDetailFragment
 import iambedoy.coronatracker.fragment.countries.CountryListFragment
 import iambedoy.coronatracker.fragment.CountryFragment
 import iambedoy.coronatracker.fragment.JHUListFragment
 import iambedoy.coronatracker.repository.CoronaRepository
 import iambedoy.coronatracker.viewmodel.CoronaViewModel
+import iambedoy.coronatracker.viewmodel.CountryDetailViewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -43,6 +45,9 @@ val viewModel = module {
     factory {
         CoronaViewModel(get())
     }
+    factory {
+        CountryDetailViewModel(get())
+    }
 }
 
 val service = module {
@@ -60,6 +65,9 @@ val fragments = module {
     }
     factory {
         CountryFragment()
+    }
+    factory {
+        CountryDetailFragment()
     }
 }
 

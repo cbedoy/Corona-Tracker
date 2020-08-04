@@ -1,12 +1,16 @@
 package iambedoy.coronatracker.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
 import com.haroldadmin.cnradapter.NetworkResponse
 import iambedoy.coronatracker.Filter
 import iambedoy.coronatracker.Filter.*
 import iambedoy.coronatracker.ServiceApi
 import iambedoy.coronatracker.dto.Country
 import iambedoy.coronatracker.dto.Global
+import iambedoy.coronatracker.dto.Historical
 import iambedoy.coronatracker.dto.JHUCountryState
+import iambedoy.repository
 
 
 /**
@@ -33,6 +37,16 @@ class CoronaRepository(private val serviceApi: ServiceApi) {
                 response.error.printStackTrace()
 
                 return null
+            }
+        }
+    }
+
+    fun requestGlobal2() : LiveData<Global>{
+        return liveData {
+            when(val response = serviceApi.getAll()){
+                is NetworkResponse.Success -> {
+                    emit(response.body)
+                }
             }
         }
     }
@@ -87,7 +101,7 @@ class CoronaRepository(private val serviceApi: ServiceApi) {
                         }
                     }
                 }
-                emptyMap()
+                mapOf
             }
             else -> {
                 emptyMap()
@@ -100,6 +114,16 @@ class CoronaRepository(private val serviceApi: ServiceApi) {
             val get = get(country)
             clear()
             set(country, get?: mutableListOf())
+        }
+    }
+
+    fun requestAllHistorical(): LiveData<Historical> {
+        return liveData {
+            when(val response = serviceApi.getHistorical(360)){
+                is NetworkResponse.Success -> {
+                    emit(response.body)
+                }
+            }
         }
     }
 }
