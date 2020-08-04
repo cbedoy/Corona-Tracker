@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:layout_height="match_parent">
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart_cases"
+        android:layout_weight="1"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart_deaths"
+        android:layout_weight="1"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart_recovered"
+        android:layout_weight="1"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <include layout="@layout/details_view"/>
+
+</LinearLayout>
